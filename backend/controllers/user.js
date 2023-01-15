@@ -1,5 +1,6 @@
 const { validateEmail, validateLength } = require('../helpers/validation');
 const User = require('../models/User');
+const bcrypt = require('bcrypt');
 exports.register = async (req, res) => {
   try {
     const {
@@ -45,11 +46,13 @@ exports.register = async (req, res) => {
         message: 'password must be at least 6 characters long',
       });
     }
+
+    const cryptedPassword = await bcrypt.hash(password, 12);
     const user = new User({
       first_name,
       last_name,
       email,
-      password,
+      password: cryptedPassword,
       username,
       bYear,
       bMonth,
