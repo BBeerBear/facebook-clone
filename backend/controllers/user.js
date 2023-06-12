@@ -24,7 +24,7 @@ exports.register = async (req, res) => {
     if (!validateEmail(email)) {
       return res.status(400).json({ message: 'invalid email address' });
     }
-    const check = await User.findOne({ email: email });
+    const check = await User.findOne({ email });
     if (check) {
       return res.status(400).json({
         message:
@@ -32,11 +32,6 @@ exports.register = async (req, res) => {
       });
     }
 
-    if (!validateLength(first_name, 3, 30)) {
-      return res.status(400).json({
-        message: 'first_name must between 3 and 30 characters.',
-      });
-    }
     if (!validateLength(first_name, 3, 30)) {
       return res.status(400).json({
         message: 'first name must between 3 and 30 characters.',
@@ -71,10 +66,10 @@ exports.register = async (req, res) => {
     const emailValidationToken = generateToken(
       { id: user._id.toString() },
       '30m'
-    );
+    ); // for url
     const url = `${process.env.BASE_URL}/activate/${emailValidationToken}`;
     sendVerificationEmail(user.email, user.first_name, url);
-    const token = generateToken({ id: user._id.toString() }, '7d');
+    const token = generateToken({ id: user._id.toString() }, '7d'); // user can use it for login
 
     res.send({
       id: user._id,
@@ -114,7 +109,7 @@ exports.activateAccount = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({
         message:

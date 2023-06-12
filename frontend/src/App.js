@@ -1,10 +1,16 @@
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Login from './pages/login';
+import Profile from './pages/profile';
+import Home from './pages/home';
+
+const router = createBrowserRouter([
+  { path: '/', element: <Home /> },
+  { path: '/login', element: <Login /> },
+  { path: '/profile', element: <Profile /> },
+]);
+
 function App() {
-  const get = async () => {
-    const res = await fetch('http://localhost:8000');
-    console.log(res);
-  };
-  get();
-  return <div>welcome to frontend</div>;
+  return <RouterProvider router={router} />;
 }
 
 export default App;
