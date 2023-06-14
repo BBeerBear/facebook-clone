@@ -28,9 +28,26 @@ export default function LoginForm({ setVisible }) {
       .max(100),
     password: Yup.string().required('Password is required'),
   });
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const loginSubmit = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/login`,
+        { email, password }
+      );
+
+      dispatch(userActions.login(data));
+      Cookies.set('user', JSON.stringify(data));
+      navigate('/');
+    } catch (error) {
+      setLoading(false);
+      setError(error.response.data.message);
+    }
+  };
 
   return (
     <div className='login_wrap'>
@@ -45,7 +62,7 @@ export default function LoginForm({ setVisible }) {
             initialValues={{ email, password }}
             validationSchema={loginValidation}
             onSubmit={() => {
-              dispatch(userActions.login());
+              loginSubmit();
             }}
           >
             {(formik) => (
@@ -72,6 +89,8 @@ export default function LoginForm({ setVisible }) {
           <Link to='/forget' className='forgot_password'>
             Forgot password?
           </Link>
+          {error && <div className='error_text'>{error}</div>}
+          <DotLoader color='#1876f2' loading={loading} size={30} />
           <div className='sign_splitter'></div>
           <button
             className='blue_btn open_signup'
