@@ -73,7 +73,7 @@
   transform: translate(-50%, -50%); /* in the middle */
   box-shadow: 0 3px 10px var(--shadow-1);
   border-radius: 8px;
-  width: 350px;
+  width: 400px;
   height: fit-content;
   padding: 15px;
   background: var(--bg-primary);
@@ -105,14 +105,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 5px;
 }
 .reg_line {
   width: 100%;
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .reg_col {
+  position: relative;
   width: 100%;
   margin-bottom: 7px;
   display: flex;
@@ -178,6 +180,12 @@
 }
 .btn_wrapper button {
   padding: 7px 60px;
+}
+.error_text {
+  color: #b94a48;
+}
+.success_text {
+  color: var(--green-color);
 }
 /*-----Footer-----*/
 .login_footer {

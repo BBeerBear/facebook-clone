@@ -3,14 +3,20 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import LoginInput from '../inputs/loginInput';
 import { useState } from 'react';
+import DotLoader from 'react-spinners/ClipLoader';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { userActions } from '../../store/user';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+
 const loginInfos = {
   email: '',
   password: '',
 };
-export default function LoginForm() {
+export default function LoginForm({ setVisible }) {
   const [login, setLogin] = useState(loginInfos);
   const { email, password } = login;
-  console.log(login);
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
     setLogin({ ...login, [name]: value });
@@ -22,6 +28,9 @@ export default function LoginForm() {
       .max(100),
     password: Yup.string().required('Password is required'),
   });
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <div className='login_wrap'>
@@ -35,6 +44,9 @@ export default function LoginForm() {
             enableReinitialize
             initialValues={{ email, password }}
             validationSchema={loginValidation}
+            onSubmit={() => {
+              dispatch(userActions.login());
+            }}
           >
             {(formik) => (
               <Form>
@@ -61,7 +73,14 @@ export default function LoginForm() {
             Forgot password?
           </Link>
           <div className='sign_splitter'></div>
-          <button className='blue_btn open_signup'>Create new account</button>
+          <button
+            className='blue_btn open_signup'
+            onClick={() => {
+              setVisible(true);
+            }}
+          >
+            Create new account
+          </button>
         </div>
         <Link to='/' className='sign_extra'>
           <b>Create a Page </b>
