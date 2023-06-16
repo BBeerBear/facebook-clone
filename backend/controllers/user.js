@@ -76,6 +76,7 @@ exports.register = async (req, res) => {
       username: user.username,
       first_name: user.first_name,
       last_name: user.last_name,
+      picture: user.picture,
       token: token,
       verified: user.verified,
       message: 'Register Success ! Please activate you email to start',
@@ -128,6 +129,7 @@ exports.login = async (req, res) => {
       username: user.username,
       first_name: user.first_name,
       last_name: user.last_name,
+      picture: user.picture,
       token: token,
       verified: user.verified,
     });
