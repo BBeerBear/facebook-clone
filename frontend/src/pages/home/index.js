@@ -9,7 +9,6 @@ export default function Home() {
   useClickOutside(el, () => {
     setVisible(false);
   });
-  console.log(visible);
   // useClickOutside(el, () => {
   //   el.current.style.display = 'none';
   // });

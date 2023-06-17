@@ -19,18 +19,24 @@ import { useRef, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import AllMenu from './AllMenu';
 import useClickOutside from '../../helpers/clickOutside';
+import UserMenu from './userMenu';
 
 export default function Header() {
   const color = '#65676B';
   const user = useSelector((state) => state.user);
-  const [showSearchMenu, setShowSearchMenu] = useState(false);
   const desktopView = useMediaQuery({
     query: '(min-width:1300px)',
   });
+  const [showSearchMenu, setShowSearchMenu] = useState(false);
   const [showAllMenu, setShowAllMenu] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const allMenuRef = useRef();
+  const userMenuRef = useRef();
   useClickOutside(allMenuRef, () => {
     setShowAllMenu(false);
+  });
+  useClickOutside(userMenuRef, () => {
+    setShowUserMenu(false);
   });
   return (
     <header>
@@ -41,21 +47,19 @@ export default function Header() {
           </div>
         </Link>
         <div
-          className='search'
+          className='search search1'
           onClick={() => {
             setShowSearchMenu(true);
           }}
         >
-          <div className='circle_icon'>
+          <div className='circle'>
             <Search color={color} />
           </div>
-          {desktopView && (
-            <input
-              type='text'
-              placeholder='Search Facebook'
-              className='hide_input'
-            />
-          )}
+          <input
+            type='text'
+            placeholder='Search Facebook'
+            className='hide_input'
+          />
         </div>
       </div>
       {showSearchMenu && (
@@ -106,8 +110,7 @@ export default function Header() {
       </div>
       <div className='header_right'>
         <div
-          className='circle_icon hover2'
-          ref={allMenuRef}
+          className={`circle_icon hover2 ${showAllMenu ? 'active_header' : ''}`}
           onClick={() => {
             setShowAllMenu((prev) => !prev);
           }}
@@ -122,9 +125,16 @@ export default function Header() {
           <Notifications />
           <div className='right_notification'>1</div>
         </div>
-        <Link to='/profile' className='circle_icon'>
+        <div
+          className='circle_icon hover2'
+          ref={userMenuRef}
+          onClick={(prev) => {
+            setShowUserMenu((prev) => !prev);
+          }}
+        >
           <img src={user?.picture} alt='' />
-        </Link>
+          {showUserMenu && <UserMenu user={user} />}
+        </div>
       </div>
     </header>
   );

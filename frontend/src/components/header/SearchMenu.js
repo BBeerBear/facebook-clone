@@ -24,7 +24,7 @@ export default function SearchMenu({ color, setShowSearchMenu }) {
         </div>
         <div className='search'>
           {iconVisible && (
-            <div className='circle_icon'>
+            <div className='circle'>
               <Search color={color} />
             </div>
           )}
