@@ -10,11 +10,11 @@ import { userActions } from '../../store/user';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
-const loginInfos = {
-  email: '',
-  password: '',
-};
 export default function LoginForm({ setVisible }) {
+  const loginInfos = {
+    email: '',
+    password: '',
+  };
   const [login, setLogin] = useState(loginInfos);
   const { email, password } = login;
   const handleLoginChange = (e) => {
