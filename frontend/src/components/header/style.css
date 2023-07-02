@@ -97,7 +97,6 @@ header {
 }
 .middle_icon {
   position: relative;
-  border-radius: 10px;
   flex: 1;
   display: flex;
   justify-content: center;
@@ -128,25 +127,7 @@ header {
   align-items: center;
   gap: 8px;
 }
-.circle_icon {
-  border-radius: 100%;
-  background: var(--bg-forth);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 35px;
-  height: 35px;
-  min-width: 35px;
-  cursor: pointer;
-}
-.circle_icon img {
-  border-radius: 100%;
-  width: 35px;
-  height: 35px;
-}
-.circle_icon svg {
-  transform: scale(0.9);
-}
+
 .circle_icon_active {
   background: #e4f0fc;
   color: var(--blue-color);

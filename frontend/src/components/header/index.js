@@ -16,7 +16,6 @@ import {
 import { useSelector } from 'react-redux';
 import SearchMenu from './SearchMenu';
 import { useRef, useState } from 'react';
-import { useMediaQuery } from 'react-responsive';
 import AllMenu from './AllMenu';
 import useClickOutside from '../../helpers/clickOutside';
 import UserMenu from './userMenu';
@@ -24,20 +23,22 @@ import UserMenu from './userMenu';
 export default function Header() {
   const color = '#65676B';
   const user = useSelector((state) => state.user);
-  const desktopView = useMediaQuery({
-    query: '(min-width:1300px)',
-  });
+
   const [showSearchMenu, setShowSearchMenu] = useState(false);
   const [showAllMenu, setShowAllMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+
   const allMenuRef = useRef();
   const userMenuRef = useRef();
+  // hide all menu
   useClickOutside(allMenuRef, () => {
     setShowAllMenu(false);
   });
+  // hide user menu
   useClickOutside(userMenuRef, () => {
     setShowUserMenu(false);
   });
+
   return (
     <header>
       <div className='header_left'>
@@ -114,6 +115,7 @@ export default function Header() {
           onClick={() => {
             setShowAllMenu((prev) => !prev);
           }}
+          ref={allMenuRef}
         >
           <Menu />
           {showAllMenu && <AllMenu />}

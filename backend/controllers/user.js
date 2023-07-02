@@ -75,6 +75,8 @@ exports.register = async (req, res) => {
 
     // user login token
     const token = generateToken({ id: user._id.toString() }, '7d');
+    const expiration = new Date();
+    expiration.setDate(expiration.getDate() + 7);
 
     res.send({
       id: user._id,
@@ -83,6 +85,7 @@ exports.register = async (req, res) => {
       last_name: user.last_name,
       picture: user.picture,
       token: token,
+      expiration: expiration.toISOString(),
       verified: user.verified,
       message: 'Register Success ! Please activate you email to start',
     });
@@ -132,6 +135,9 @@ exports.login = async (req, res) => {
 
     // user login token
     const token = generateToken({ id: user._id.toString() }, '7d');
+    const expiration = new Date();
+    expiration.setDate(expiration.getDate() + 7);
+
     res.send({
       id: user._id,
       username: user.username,
@@ -139,6 +145,7 @@ exports.login = async (req, res) => {
       last_name: user.last_name,
       picture: user.picture,
       token: token,
+      expiration: expiration.toISOString(),
       verified: user.verified,
     });
   } catch (error) {
@@ -146,4 +153,9 @@ exports.login = async (req, res) => {
       message: error.message,
     });
   }
+};
+
+exports.auth = (req, res) => {
+  console.log(req.user);
+  res.json('welcome from auth');
 };

@@ -41,12 +41,15 @@ export default function LoginForm({ setVisible }) {
         `${process.env.REACT_APP_BACKEND_URL}/login`,
         { email, password }
       );
-
-      dispatch(userActions.login(data));
-      Cookies.set('user', JSON.stringify(data));
+      const { token, expiration, ...rest } = data; // rest is the user data we want to add into the redux store
+      dispatch(userActions.login(rest));
+      Cookies.set('user', JSON.stringify(rest));
+      localStorage.setItem('token', token);
+      localStorage.setItem('expiration', expiration);
       navigate('/');
     } catch (error) {
       setLoading(false);
+      console.log(error);
       setError(error.response.data.message);
     }
   };

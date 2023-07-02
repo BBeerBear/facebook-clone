@@ -37,16 +37,20 @@ export default function RegisterForm({ setVisible }) {
   } = user;
 
   const handleRegisterChange = (e) => {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setUser((prevUser) => ({ ...prevUser, [e.target.name]: e.target.value }));
   };
 
-  const years = Array.from(new Array(108), (val, index) => bYear - index);
+  // years, months, days options
+  const years = Array.from(
+    new Array(108),
+    (val, index) => new Date().getFullYear() - index
+  );
   const months = Array.from(new Array(12), (val, index) => 1 + index);
   const getDays = () => {
     return new Date(bYear, bMonth, 0).getDate();
   };
   const days = Array.from(new Array(getDays()), (val, index) => 1 + index);
+
   const registerValidation = Yup.object({
     first_name: Yup.string()
       .required("What's your name?")
@@ -103,13 +107,13 @@ export default function RegisterForm({ setVisible }) {
       );
       setError('');
       setSuccess(data.message);
-      const { message, ...rest } = data; // rest is the user data we want to add into the redux store
-      setTimeout(() => {
-        // wait 2 seconds then do the next code
-        dispatch(userActions.login(rest));
-        Cookies.set('user', JSON.stringify(rest));
-        navigate('/');
-      }, 2000);
+
+      const { message, token, expiration, ...rest } = data; // rest is the user data we want to add into the redux store
+      dispatch(userActions.login(rest));
+      Cookies.set('user', JSON.stringify(rest));
+      localStorage.setItem('token', token);
+      localStorage.setItem('expiration', expiration);
+      navigate('/');
     } catch (err) {
       setLoading(false);
       setSuccess('');
@@ -137,11 +141,11 @@ export default function RegisterForm({ setVisible }) {
           onSubmit={() => {
             // Age & Gender validation
             let current_date = new Date();
-            let picked_date = new Date(bYear, bMonth, bDay);
-            let atleat14 = new Date(1970 + 1, 0, 1);
+            let picked_date = new Date(bYear, bMonth - 1, bDay);
+            let atleast14 = new Date(1970 + 14, 0, 1);
             let noMoreThan70 = new Date(1970 + 70, 0, 1);
             if (
-              current_date - picked_date < atleat14 ||
+              current_date - picked_date < atleast14 ||
               current_date - picked_date > noMoreThan70
             ) {
               setDateError(

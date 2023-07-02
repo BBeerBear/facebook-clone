@@ -14,7 +14,9 @@ export default function UserMenu({ user }) {
             <Link to='/profile'>
               <div className='mmenu_header_item hover1'>
                 <img src={user?.picture} alt='' className='circle_icon' />
-                <span>Limin Xiong</span>
+                <span>
+                  {user?.first_name} {user?.last_name}
+                </span>
               </div>
             </Link>
             <div className='mmenu_splitter'></div>

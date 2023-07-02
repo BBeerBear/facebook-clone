@@ -64,6 +64,7 @@ a {
 }
 .hover1:hover {
   background: #f2f2f2;
+  border-radius: 10px;
 }
 .hover2:hover {
   background: var(--bg-fifth);
@@ -85,6 +86,34 @@ a {
   width: 8px;
 }
 .scrollbar::-webkit-scrollbar-thumb {
-  background: #aeaeafa1;
+  background-color: #aeaeafa1;
   border-radius: 5px;
+}
+
+/* circle icon */
+.circle_icon {
+  border-radius: 100%;
+  background: var(--bg-forth);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  min-width: 35px;
+  cursor: pointer;
+}
+.circle_icon img {
+  border-radius: 100%;
+  width: 35px;
+  height: 35px;
+}
+.circle_icon svg {
+  transform: scale(0.9);
+}
+
+/* splitter */
+.splitter {
+  height: 1px;
+  background: var(--divider);
+  width: 100%;
 }
