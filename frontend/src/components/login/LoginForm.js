@@ -28,10 +28,12 @@ export default function LoginForm({ setVisible }) {
       .max(100),
     password: Yup.string().required('Password is required'),
   });
+
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const loginSubmit = async () => {
     try {
       setLoading(true);

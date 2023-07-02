@@ -8,6 +8,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { generateToken } = require('../helpers/token');
 const { sendVerificationEmail } = require('../helpers/mailer');
+
 exports.register = async (req, res) => {
   try {
     const {
@@ -63,13 +64,17 @@ exports.register = async (req, res) => {
       bDay,
       gender,
     }).save();
+
     const emailValidationToken = generateToken(
       { id: user._id.toString() },
       '30m'
-    ); // for url
+    ); // for activate url
+
     const url = `${process.env.BASE_URL}/activate/${emailValidationToken}`;
     sendVerificationEmail(user.email, user.first_name, url);
-    const token = generateToken({ id: user._id.toString() }, '7d'); // user can use it for login
+
+    // user login token
+    const token = generateToken({ id: user._id.toString() }, '7d');
 
     res.send({
       id: user._id,
@@ -85,11 +90,11 @@ exports.register = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 exports.activateAccount = async (req, res) => {
   try {
     const { token } = req.body;
-    const user = jwt.verify(token, process.env.TOKEN_SECRET);
-    console.log(user);
+    const user = jwt.verify(token, process.env.TOKEN_SECRET); // jwt payload
     const check = await User.findById(user.id);
     if (check.verified === true) {
       return res.status(400).json({
@@ -107,6 +112,7 @@ exports.activateAccount = async (req, res) => {
     });
   }
 };
+
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -123,6 +129,8 @@ exports.login = async (req, res) => {
         message: 'Invalid Credentials. Please try again.',
       });
     }
+
+    // user login token
     const token = generateToken({ id: user._id.toString() }, '7d');
     res.send({
       id: user._id,

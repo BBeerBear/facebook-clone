@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Form, Link } from 'react-router-dom';
 import { useState } from 'react';
 import SettingPrivacy from './SettingPrivacy';
 import HelpSupport from './HelpSupport';
@@ -76,7 +76,9 @@ export default function UserMenu({ user }) {
               <div className='circle_icon'>
                 <div className='logout_filled_icon'></div>
               </div>
-              <span>Log Out</span>
+              <Form action='/logout' method='post'>
+                <span>Log Out</span>
+              </Form>
             </div>
           </div>
         </div>

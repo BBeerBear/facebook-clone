@@ -1,8 +1,8 @@
-import Footer from '../../components/login/Footer';
-import LoginForm from '../../components/login/LoginForm';
-import RegisterForm from '../../components/login/RegisterForm';
-import './style.css';
 import { useState } from 'react';
+import Footer from './Footer';
+import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
+import './style.css';
 
 export default function Login() {
   const [visible, setVisible] = useState(false);

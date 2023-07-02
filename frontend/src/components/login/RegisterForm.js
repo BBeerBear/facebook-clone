@@ -23,6 +23,7 @@ export default function RegisterForm({ setVisible }) {
     bDay: new Date().getDate(),
     gender: '',
   };
+
   const [user, setUser] = useState(userInfos);
   const {
     first_name,
@@ -34,10 +35,12 @@ export default function RegisterForm({ setVisible }) {
     bDay,
     gender,
   } = user;
+
   const handleRegisterChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
+
   const years = Array.from(new Array(108), (val, index) => bYear - index);
   const months = Array.from(new Array(12), (val, index) => 1 + index);
   const getDays = () => {
@@ -113,6 +116,7 @@ export default function RegisterForm({ setVisible }) {
       setError(err.response.data.message);
     }
   };
+
   return (
     <div className='blur'>
       <div className='register'>
