@@ -156,6 +156,5 @@ exports.login = async (req, res) => {
 };
 
 exports.auth = (req, res) => {
-  console.log(req.user);
   res.json('welcome from auth');
 };

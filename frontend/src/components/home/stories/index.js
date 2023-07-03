@@ -18,7 +18,7 @@ export default function Stories() {
         <div className='story_create_text'>Create Story</div>
       </div>
       {stories.map((story, index) => (
-        <Story story={story} index={index} />
+        <Story story={story} index={index} key={index} />
       ))}
     </div>
   );

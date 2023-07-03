@@ -13,6 +13,9 @@ const userSlice = createSlice({
     login(state, action) {
       state = action.payload;
     },
+    verify(state) {
+      state.verified = true;
+    },
   },
 });
 
